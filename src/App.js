@@ -3,48 +3,53 @@ import './App.css';
 import './likeButton.css';
 function App() {
 
-  const [count, setCount] = useState({
-    likeCount: 100,
-    dislikeCount: 25
-  })
-let likeCss=["like-button"]
-let dislikeCss=["dislike-button "]
-const likeCountHandler=()=>{
-  if(count.likeCount===101)
-  {
-    setCount({ ...count, likeCount: count.likeCount - 1 })
-    likeCss.pop("liked")
-  }
-  else{
-    setCount({ ...count, likeCount: count.likeCount + 1 })
-    likeCss.push("liked")
-  }
-}
-const dislikeCountHandler=()=>{
-  if(count.dislikeCount===26)
-  {
-    setCount({ ...count, dislikeCount: count.dislikeCount - 1 })
-    dislikeCss.pop("disliked")
-  }
-  else{
-    setCount({ ...count, dislikeCount: count.dislikeCount + 1 })
-    dislikeCss.push("disliked")
-  }
-} 
+  const [likecount, setlikeCount] = useState(100)
+  const [dislikecount,setdislikeCount]=useState(25)
+  const [likeToggle, setLikeToggle] = useState(false)
+  const [dislikeToggle, setdislikeToggle] = useState(false)
 
+  const likeCountHandler = () => {
+    if (likeToggle) {
+      setlikeCount(likecount-1)
+      setLikeToggle(false)
+    }
+    else {
+    setlikeCount(likecount+1)
+      setLikeToggle(true)
+      if (dislikeToggle) {
+        setdislikeToggle(false)
+       setdislikeCount(dislikecount+1)
+      }
+    }
+  }
+  const dislikeCountHandler = () => {
+    if (dislikeToggle) {
+    setdislikeCount(dislikecount-1)
+      setdislikeToggle(false)
+    }
+    else {
+      
+     setdislikeCount(dislikecount+1)
+      setdislikeToggle(true)
+      if (likeToggle) {
+        setlikeCount(likecount-1)
+        setLikeToggle(false)
+      }
+    }
 
+  }
   return (
     <div className="App">
-      <h1>Hii All</h1>
-      <h2> <button className={likeCss}
-       onClick={likeCountHandler}  >
-         Like|</button>
-        <span className="likes-counter" >{count.likeCount} </span>
+
+      <h2> <button className={likeToggle ? "like-button liked" : "like-button"}
+        onClick={likeCountHandler}  >
+        Like| <span className="likes-counter" >{likecount} </span></button>
+
       </h2>
-      <h2> <button className={dislikeCss} 
-      onClick={dislikeCountHandler} >
-        Dislike|</button>
-        <span className="dislikes-counter"   >{count.dislikeCount} </span>
+      <h2> <button className={dislikeToggle ? "dislike-button disliked" : "dislike-button"}
+        onClick={dislikeCountHandler} >
+        Dislike|<span className="dislikes-counter" >{dislikecount} </span></button>
+
       </h2>
     </div>
   );
